@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import projetkotlin.com.profilecardlayout.ui.theme.MyTheme
+import projetkotlin.com.profilecardlayout.ui.theme.lightGreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +66,7 @@ fun ProfilePicture() {
     Card(
         shape = CircleShape, border = BorderStroke(
             width = 2.dp,
-            color = Color.Green
+            color = MaterialTheme.colors.lightGreen
         ),
         modifier = Modifier.padding(16.dp),
         elevation = 4.dp
