@@ -33,8 +33,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.LightGray
+        modifier = Modifier.fillMaxSize()
     ) {
         ProfileCard()
     }
@@ -47,7 +46,8 @@ fun ProfileCard() {
             .padding(26.dp)
             .fillMaxSize()
             .wrapContentHeight(align = Alignment.Top),
-        elevation = 8.dp
+        elevation = 8.dp,
+        backgroundColor = Color.White
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
