@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Composition
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,13 +17,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import projetkotlin.com.profilecardlayout.ui.theme.ProfileCardLayoutTheme
+import projetkotlin.com.profilecardlayout.ui.theme.MyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainScreen()
+            MyTheme() {
+                MainScreen()
+            }
         }
     }
 }
@@ -89,7 +90,7 @@ fun ProfileContent() {
             text = "Dolores Freitas",
             style = MaterialTheme.typography.h5
         )
-        CompositionLocalProvider( LocalContentAlpha provides ContentAlpha.medium) {
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
                 text = "Active now",
                 style = MaterialTheme.typography.body2
@@ -101,5 +102,7 @@ fun ProfileContent() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MainScreen()
+    MyTheme() {
+        MainScreen()
+    }
 }
