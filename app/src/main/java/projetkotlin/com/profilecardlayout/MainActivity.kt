@@ -84,7 +84,8 @@ fun ProfileCard() {
 @Composable
 fun ProfilePicture() {
     Card(
-        shape = CircleShape, border = BorderStroke(
+        shape = CircleShape,
+        border = BorderStroke(
             width = 2.dp,
             color = MaterialTheme.colors.lightGreen
         ),
