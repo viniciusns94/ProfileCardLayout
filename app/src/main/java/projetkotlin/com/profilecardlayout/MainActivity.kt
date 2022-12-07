@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyTheme() {
+            MyTheme {
                 MainScreen()
             }
         }
@@ -36,12 +36,22 @@ class MainActivity : ComponentActivity() {
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainScreen() {
-    Scaffold(topBar = { AppBar() }) {
+fun MainScreen(userProfiles: List<UserProfile> = userProfileList) {
+    Scaffold(
+        topBar = { AppBar() },
+        bottomBar = {}
+    ) {
         Surface(
             modifier = Modifier.fillMaxSize(),
         ) {
-            ProfileCard()
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceEvenly,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                for (userProfile in userProfiles)
+                    ProfileCard(userProfile = userProfile)
+            }
         }
     }
 }
@@ -61,10 +71,10 @@ fun AppBar() {
 }
 
 @Composable
-fun ProfileCard() {
+fun ProfileCard(userProfile: UserProfile) {
     Card(
         modifier = Modifier
-            .padding(26.dp)
+            .padding(top = 16.dp, bottom = 4.dp, start = 16.dp, end = 16.dp)
             .fillMaxSize()
             .wrapContentHeight(align = Alignment.Top),
         elevation = 8.dp,
@@ -75,25 +85,28 @@ fun ProfileCard() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            ProfilePicture()
-            ProfileContent()
+            ProfilePicture(userProfile.drawableId, userProfile.status)
+            ProfileContent(userProfile.name, userProfile.status)
         }
     }
 }
 
 @Composable
-fun ProfilePicture() {
+fun ProfilePicture(drawableId: Int, onlineStatus: Boolean) {
     Card(
         shape = CircleShape,
         border = BorderStroke(
             width = 2.dp,
-            color = MaterialTheme.colors.lightGreen
+            color = if (onlineStatus)
+                MaterialTheme.colors.lightGreen
+            else
+                Color.Red
         ),
         modifier = Modifier.padding(16.dp),
         elevation = 4.dp
     ) {
         Image(
-            painter = painterResource(id = R.drawable.profile_picture),
+            painter = painterResource(id = drawableId),
             contentDescription = "Contet Description",
             modifier = Modifier.size(72.dp),
             contentScale = ContentScale.Crop
@@ -102,19 +115,30 @@ fun ProfilePicture() {
 }
 
 @Composable
-fun ProfileContent() {
+fun ProfileContent(userName: String, onlineStatus: Boolean) {
     Column(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
     ) {
-        Text(
-            text = "Dolores Freitas",
-            style = MaterialTheme.typography.h5
-        )
+        CompositionLocalProvider(
+            LocalContentAlpha provides (
+                    if (onlineStatus) 1f
+                    else ContentAlpha.medium)
+        ) {
+            Text(
+                text = userName,
+                style = MaterialTheme.typography.h5
+            )
+        }
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
-                text = "Active now",
+                text = (
+                        if (onlineStatus)
+                            "Active now"
+                        else
+                            "Offline"
+                        ),
                 style = MaterialTheme.typography.body2
             )
         }
@@ -124,7 +148,7 @@ fun ProfileContent() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MyTheme() {
+    MyTheme {
         MainScreen()
     }
 }

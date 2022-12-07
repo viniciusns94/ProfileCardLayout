@@ -14,10 +14,10 @@ val Typography = Typography(
         fontSize = 16.sp
     ),
     h5 = TextStyle(
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 22.sp,
         letterSpacing = 1.sp
-    ),
+    )
     /* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,
