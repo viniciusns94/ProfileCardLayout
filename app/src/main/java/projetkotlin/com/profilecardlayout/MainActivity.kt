@@ -20,8 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.transform.CircleCropTransformation
+import com.google.accompanist.coil.rememberCoilPainter
 import projetkotlin.com.profilecardlayout.ui.theme.MyTheme
 import projetkotlin.com.profilecardlayout.ui.theme.lightGreen
 
@@ -105,11 +108,19 @@ fun ProfilePicture(drawableId: Int, onlineStatus: Boolean) {
         elevation = 4.dp
     ) {
         Image(
-            painter = painterResource(id = drawableId),
-            contentDescription = "Contet Description",
+            painter = rememberCoilPainter(request = drawableId,
+                requestBuilder = {
+                    transformations(CircleCropTransformation())
+                }),
             modifier = Modifier.size(72.dp),
-            contentScale = ContentScale.Crop
+            contentDescription = "Contet Description"
         )
+//        Image(
+//            painter = painterResource(id = drawableId),
+//            contentDescription = "Contet Description",
+//            modifier = Modifier.size(72.dp),
+//            contentScale = ContentScale.Crop
+//        )
     }
 }
 
