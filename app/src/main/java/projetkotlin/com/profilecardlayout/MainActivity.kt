@@ -18,9 +18,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.transform.CircleCropTransformation
@@ -87,14 +84,14 @@ fun ProfileCard(userProfile: UserProfile) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            ProfilePicture(userProfile.drawableId, userProfile.status)
+            ProfilePicture(userProfile.pictureUrl, userProfile.status)
             ProfileContent(userProfile.name, userProfile.status)
         }
     }
 }
 
 @Composable
-fun ProfilePicture(drawableId: Int, onlineStatus: Boolean) {
+fun ProfilePicture(picturaUrl: String, onlineStatus: Boolean) {
     Card(
         shape = CircleShape,
         border = BorderStroke(
@@ -108,19 +105,13 @@ fun ProfilePicture(drawableId: Int, onlineStatus: Boolean) {
         elevation = 4.dp
     ) {
         Image(
-            painter = rememberCoilPainter(request = drawableId,
+            painter = rememberCoilPainter(request = picturaUrl,
                 requestBuilder = {
                     transformations(CircleCropTransformation())
                 }),
             modifier = Modifier.size(72.dp),
             contentDescription = "Contet Description"
         )
-//        Image(
-//            painter = painterResource(id = drawableId),
-//            contentDescription = "Contet Description",
-//            modifier = Modifier.size(72.dp),
-//            contentScale = ContentScale.Crop
-//        )
     }
 }
 
